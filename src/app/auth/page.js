@@ -90,17 +90,82 @@ export default function AuthPage() {
       setLoading(false)
     }
   }
-  const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-    
-      options: {
-        queryParams: {
-          prompt: 'select_account'
-        }
+  const createUserIfNeeded =
+  async () => {
+
+    const {
+      data: { session }
+    } =
+      await supabase.auth.getSession()
+
+    if (!session) return
+
+    const user =
+      session.user
+
+    const {
+      data: existingUser
+    } =
+      await supabase
+        .from('users')
+        .select('id')
+        .eq('id', user.id)
+        .maybeSingle()
+
+    if (
+      !existingUser
+    ) {
+
+      await supabase
+        .from('users')
+        .insert([
+          {
+            id: user.id,
+
+            email:
+              user.email,
+
+            name:
+              user.user_metadata
+                ?.full_name ||
+
+              user.user_metadata
+                ?.name ||
+
+              'Writer',
+
+            role:
+              'author',
+
+            avatar_url:
+              user.user_metadata
+                ?.avatar_url ||
+
+              user.user_metadata
+                ?.picture ||
+
+              ''
+          }
+        ])
+    }
+}
+const signInWithGoogle = async () => {
+
+  await supabase.auth.signInWithOAuth({
+    provider: 'google',
+
+    options: {
+      queryParams: {
+        prompt: 'select_account'
       }
-    })
-  }
+    }
+  })
+
+  setTimeout(() => {
+    createUserIfNeeded()
+  }, 3000)
+
+}
 
   const moveMouse = (e) => {
     const el = mainRef.current
