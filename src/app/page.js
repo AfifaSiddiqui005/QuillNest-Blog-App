@@ -24,6 +24,9 @@ Trash2
 } from 'lucide-react'
 
 export default function HomePage() {
+const [loadingPosts, setLoadingPosts] =
+  useState(true)
+  
   const router =
   useRouter()
 
@@ -313,6 +316,7 @@ const [openPostMenu, setOpenPostMenu] =
   }
 
   async function fetchPosts() {
+    setLoadingPosts(true)
     let query = supabase
       .from('posts')
       .select(`
@@ -338,6 +342,7 @@ users!posts_author_id_fkey (
       await query
 
     setPosts(data || [])
+    setLoadingPosts(false)
   }
 
   function handleSearch() {
@@ -961,7 +966,13 @@ focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]
     text-center
   "
 >
-
+if (loadingPosts) {
+  return (
+    <main className="min-h-screen flex items-center justify-center text-zinc-400">
+      Loading stories...
+    </main>
+  )
+}
   <h3 className="mb-3 text-2xl font-semibold text-[#ece7df]">
 
   Nothing to show yet
