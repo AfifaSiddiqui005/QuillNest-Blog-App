@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# QuillNest
 
-## Getting Started
+QuillNest is a modern blogging platform built using Next.js and Supabase.
 
-First, run the development server:
+The platform allows users to write, discover, and interact with stories in a clean and immersive environment. It includes authentication, role-based permissions, AI-powered summaries, interactive engagement features, and a premium user interface.
+
+---
+
+## Project Overview
+
+This project was built as part of a full-stack development assignment with the goal of creating a blogging platform that combines modern UI/UX with practical backend functionality.
+
+Users can:
+
+- Create and publish stories
+- Read posts written by other users
+- Like posts and join conversations through comments
+- Explore writer profiles
+- Manage content based on their assigned role
+
+---
+
+## User Roles
+
+### Author
+
+Authors can:
+
+- Create new posts
+- Edit their own posts
+- Delete their own posts
+- Interact with posts through likes and comments
+
+### Viewer
+
+Viewers can:
+
+- Explore published stories
+- Read AI-generated summaries
+- Like posts
+- Comment on posts
+
+### Admin
+
+Admins can:
+
+- View all posts
+- Edit any post
+- Delete any post
+- Monitor comments and platform activity
+
+---
+
+## Core Features
+
+- Email and Google Authentication
+- Role-Based Access Control
+- Profile Customization with Avatars
+- Create, Edit, and Delete Posts
+- Featured Story Experience
+- Search Functionality
+- Likes and Comments System
+- Writer Profile Pages
+- AI Summary Generation for New Posts
+- Responsive Premium Interface
+
+---
+
+## Technologies Used
+
+### Frontend & Backend
+
+- Next.js
+
+### Database & Authentication
+
+- Supabase
+
+### Styling
+
+- Tailwind CSS
+
+### AI Integration
+
+- Google AI API
+
+### Version Control
+
+- Git & GitHub
+
+---
+
+## Development Approach
+
+AI-assisted development tools were used during the development process to speed up debugging, UI refinement, logic design, and feature implementation.
+
+The final architecture, feature decisions, UI improvements, and debugging flow were manually reviewed, customized, and integrated into the final product.
+
+---
+
+## Running the Project
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build for production:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Developer
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Afifa Siddiqui
