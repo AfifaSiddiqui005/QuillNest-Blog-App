@@ -88,17 +88,17 @@ export default function AuthPage() {
 		const {
 			data: { session },
 		} = await supabase.auth.getSession();
-	
+
 		if (!session) return;
-	
+
 		const user = session.user;
-	
+
 		const { data: existingUser } = await supabase
 			.from("users")
 			.select("id")
 			.eq("id", user.id)
 			.single();
-	
+
 		if (!existingUser) {
 			await supabase.from("users").insert([
 				{
@@ -110,9 +110,7 @@ export default function AuthPage() {
 						"Writer",
 					role: "author",
 					avatar_url:
-						user.user_metadata?.avatar_url ||
-						user.user_metadata?.picture ||
-						"",
+						user.user_metadata?.avatar_url || user.user_metadata?.picture || "",
 				},
 			]);
 		}
@@ -226,7 +224,7 @@ export default function AuthPage() {
 				aria-hidden>
 				{/* Left sphere */}
 				<div
-					className="absolute left-[-4rem] top-[18%] h-[340px] w-[340px] rounded-full animate-floatSlow"
+					className="absolute left-[-4rem] top-[18%] hidden sm:block h-[340px] w-[340px] rounded-full animate-floatSlow"
 					style={{
 						background:
 							"radial-gradient(circle at 35% 30%, rgba(255,255,255,0.08), rgba(35,35,40,0.95) 45%, rgba(0,0,0,1) 100%)",
@@ -297,14 +295,14 @@ export default function AuthPage() {
 
 			{/* Glass card — whisper of parallax (translate only, no tilt) */}
 			<div
-				className="relative z-10 w-full max-w-[400px] transition-[transform] duration-500 ease-out will-change-transform sm:max-w-[420px]"
+				className="relative z-10 w-full max-w-[340px] sm:max-w-[400px] transition-[transform] duration-500 ease-out will-change-transform"
 				style={{
 					transform: `
 translate3d(${mouse.x * 10}px, ${mouse.y * 10}px, 0)
 scale(${1 + Math.abs(mouse.x + mouse.y) * 0.015})
 `,
 				}}>
-				<div className="relative overflow-hidden rounded-[22px] border border-white/[0.065] bg-zinc-950/35 px-8 py-6 shadow-[0_0_0_1px_rgba(255,255,255,0.035)_inset,0_1px_0_rgba(255,255,255,0.07)_inset,0_32px_64px_-12px_rgba(0,0,0,0.75),0_64px_128px_-32px_rgba(0,0,0,0.45)] backdrop-blur-[28px] backdrop-saturate-150 sm:rounded-3xl sm:px-10 sm:py-7">
+				<div className="relative overflow-hidden rounded-[22px] border border-white/[0.065] bg-zinc-950/35 px-5 py-5 sm:px-10 sm:py-7 shadow-[0_0_0_1px_rgba(255,255,255,0.035)_inset,0_1px_0_rgba(255,255,255,0.07)_inset,0_32px_64px_-12px_rgba(0,0,0,0.75),0_64px_128px_-32px_rgba(0,0,0,0.45)] backdrop-blur-[28px] backdrop-saturate-150 sm:rounded-3xl sm:px-10 sm:py-7">
 					<div
 						className="pointer-events-none absolute inset-0 opacity-40"
 						style={{
@@ -341,7 +339,7 @@ scale(${1 + Math.abs(mouse.x + mouse.y) * 0.015})
 										height={124}
 										priority
 										sizes="124px"
-										className="relative h-[108px] w-[108px] object-contain sm:h-[124px] sm:w-[124px] [filter:drop-shadow(0_12px_32px_rgba(0,0,0,0.65))_drop-shadow(0_0_1px_rgba(148,163,184,0.12))]"
+										className="relative h-[82px] w-[82px] sm:h-[124px] sm:w-[124px] object-contain sm:h-[124px] sm:w-[124px] [filter:drop-shadow(0_12px_32px_rgba(0,0,0,0.65))_drop-shadow(0_0_1px_rgba(148,163,184,0.12))]"
 									/>
 								</div>
 							</div>
@@ -349,7 +347,7 @@ scale(${1 + Math.abs(mouse.x + mouse.y) * 0.015})
 								<h1
 									className="
   brand-text
-    text-[1.9rem]
+    text-[1.55rem] sm:text-[2.1rem]
     sm:text-[2.1rem]
     font-semibold
     tracking-[-0.06em]
@@ -433,7 +431,7 @@ scale(${1 + Math.abs(mouse.x + mouse.y) * 0.015})
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
 									autoComplete="email"
-									className="w-full rounded-xl border border-violet-400/15 bg-zinc-900/50 px-4 py-3.5 text-[15px] text-zinc-100 shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-zinc-500 focus:border-slate-500/50 focus:bg-zinc-900/60 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.18),inset_0_1px_2px_rgba(0,0,0,0.28)]"
+									className="w-full rounded-xl border border-violet-400/15 bg-zinc-900/50 px-4 py-3 sm:py-3.5 text-[15px] text-zinc-100 shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-zinc-500 focus:border-slate-500/50 focus:bg-zinc-900/60 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.18),inset_0_1px_2px_rgba(0,0,0,0.28)]"
 								/>
 
 								<label className="sr-only" htmlFor="auth-password">
@@ -448,7 +446,7 @@ scale(${1 + Math.abs(mouse.x + mouse.y) * 0.015})
 									autoComplete={
 										activeTab === "login" ? "current-password" : "new-password"
 									}
-									className="w-full rounded-xl border border-zinc-600/35 bg-zinc-900/50 px-4 py-3.5 text-[15px] text-zinc-100 shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-zinc-500 focus:border-slate-500/50 focus:bg-zinc-900/60 focus:shadow-[0_0_0_3px_rgba(71,85,105,0.22),inset_0_1px_2px_rgba(0,0,0,0.28)]"
+									className="w-full rounded-xl border border-zinc-600/35 bg-zinc-900/50 px-4 py-3 sm:py-3.5 text-[15px] text-zinc-100 shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-zinc-500 focus:border-slate-500/50 focus:bg-zinc-900/60 focus:shadow-[0_0_0_3px_rgba(71,85,105,0.22),inset_0_1px_2px_rgba(0,0,0,0.28)]"
 								/>
 
 								{activeTab === "signup" && (
@@ -527,7 +525,7 @@ scale(${1 + Math.abs(mouse.x + mouse.y) * 0.015})
 								type="button"
 								onClick={activeTab === "login" ? handleLogin : handleSignup}
 								disabled={loading}
-								className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-b from-violet-950 via-indigo-900 to-slate-900 py-3.5 text-[15px] font-semibold tracking-[-0.01em] text-zinc-300 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.55)] ring-1 ring-zinc-600/25 transition-[transform,box-shadow,filter] duration-200 hover:-translate-y-px hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.55),0_0_24px_-10px_rgba(139,92,246,0.25)] hover:ring-slate-500/30 hover:brightness-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/35 active:translate-y-0 disabled:pointer-events-none disabled:opacity-40">
+								className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-b from-violet-950 via-indigo-900 to-slate-900 py-3 sm:py-3.5 text-[15px] font-semibold tracking-[-0.01em] text-zinc-300 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.55)] ring-1 ring-zinc-600/25 transition-[transform,box-shadow,filter] duration-200 hover:-translate-y-px hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.55),0_0_24px_-10px_rgba(139,92,246,0.25)] hover:ring-slate-500/30 hover:brightness-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/35 active:translate-y-0 disabled:pointer-events-none disabled:opacity-40">
 								<span
 									className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-slate-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 									aria-hidden
@@ -558,7 +556,7 @@ scale(${1 + Math.abs(mouse.x + mouse.y) * 0.015})
     rounded-xl
     border border-zinc-600/35
     bg-zinc-900/40
-    py-3.5
+    py-3 sm:py-3.5
     text-zinc-200
     transition
     hover:bg-zinc-800/50

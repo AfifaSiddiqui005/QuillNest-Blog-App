@@ -24,7 +24,6 @@ import {
 } from "lucide-react";
 
 export default function HomePage() {
-
 	const router = useRouter();
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -37,7 +36,7 @@ export default function HomePage() {
 
 	const [posts, setPosts] = useState([]);
 
-  const [loadingPosts, setLoadingPosts] = useState(true);
+	const [loadingPosts, setLoadingPosts] = useState(true);
 
 	const [search, setSearch] = useState("");
 
@@ -328,7 +327,7 @@ users!posts_author_id_fkey (
 	}
 
 	return (
-		<main className="relative z-10 flex min-h-screen bg-[#050506] text-white selection:bg-slate-800/40">
+		<main className="relative z-10 flex min-h-screen overflow-x-hidden bg-[#050506] text-white selection:bg-slate-800/40">
 			{/* Background */}
 			<div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
 				{/* Luxury dark base */}
@@ -423,17 +422,18 @@ users!posts_author_id_fkey (
 			<aside
 				className={`
     relative z-20
+	hidden sm:block
     flex-shrink-0
     border-r border-white/[0.06]
     bg-white/[0.03] backdrop-blur-[24px]
     shadow-[inset_1px_0_rgba(255,255,255,0.03)]
     overflow-hidden
-    ${sidebarOpen ? "w-[250px]" : "w-[96px]"}
+${sidebarOpen ? "w-[220px] sm:w-[250px]" : "w-[72px] sm:w-[96px]"}
   `}
 				style={{
 					transition: "width 220ms cubic-bezier(0.4,0,0.2,1)",
 				}}>
-				<div className="p-6 transition-transform duration-300 ease-out">
+				<div className="p-2.5 sm:p-6 transition-transform duration-300 ease-out">
 					<button onClick={() => setSidebarOpen(!sidebarOpen)} className="mb-8">
 						<Menu size={28} />
 					</button>
@@ -537,9 +537,51 @@ users!posts_author_id_fkey (
 			</aside>
 
 			{/* Main */}
-			<section className="relative z-10 flex-1 px-6 py-8 md:px-10">
+			<section className="relative z-10 w-full flex-1 px-3 py-5 sm:px-6 md:px-10">
 				{/* Top Bar */}
-				<div className="mb-10 flex items-center justify-between gap-6">
+				<div className="mb-8 flex items-center justify-between gap-3 sm:gap-6">
+					<div className="relative sm:hidden">
+						<button
+							onClick={() => setSidebarOpen(!sidebarOpen)}
+							className="text-zinc-300">
+							<Menu size={22} />
+						</button>
+
+						{sidebarOpen && (
+							<div
+								className="
+				absolute left-0 top-10 z-50
+				w-[170px]
+				rounded-2xl
+				border border-white/10
+				bg-zinc-950/95
+				p-2
+				backdrop-blur-xl
+			">
+								{navItems.map((item) => {
+									const Icon = item.icon;
+
+									return (
+										<button
+											key={item.name}
+											onClick={() => {
+												setActiveSection(item.name);
+												setSidebarOpen(false);
+											}}
+											className="
+							flex w-full items-center gap-3
+							rounded-xl px-3 py-3
+							text-zinc-300
+							hover:bg-white/[0.04]
+						">
+											<Icon size={16} />
+											{item.name}
+										</button>
+									);
+								})}
+							</div>
+						)}
+					</div>
 					<div className="relative w-full max-w-[720px]">
 						<input
 							type="text"
@@ -561,7 +603,7 @@ users!posts_author_id_fkey (
 								}
 							}}
 							className="
-              h-[62px]
+              h-[52px] sm:h-[62px]
               w-full
               rounded-2xl
 border-violet-400/15
@@ -570,7 +612,7 @@ backdrop-blur-[22px]
 focus:border-violet-400/30
 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]
               px-7 pr-16
-              text-[15px]
+              text-sm sm:text-[15px]
               text-zinc-100
               shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)]
               outline-none
@@ -595,7 +637,7 @@ focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]
 						<button
 							onClick={() => setShowProfileMenu(!showProfileMenu)}
 							className="
-              flex h-16 w-16 items-center justify-center
+              flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center
               rounded-full
               border border-white/10
               bg-zinc-900/70
@@ -688,7 +730,7 @@ focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]
 							: sectionContent[activeSection]?.badge}
 					</p>
 
-					<h2 className="text-2xl font-semibold text-[#ece7df]">
+					<h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#ece7df]">
 						{search.trim() && filteredPosts.length === 0
 							? `No results for "${search}"`
 							: sectionContent[activeSection]?.title}
@@ -698,8 +740,8 @@ focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]
 				{/* Posts */}
 
 				{!featuredPost ? (
-	<div
-		className="
+					<div
+						className="
       mt-20 flex flex-col items-center justify-center
       rounded-[36px]
       border border-white/5
@@ -707,24 +749,24 @@ focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]
       px-8 py-20
       text-center
     ">
-		<h3 className="mb-3 text-2xl font-semibold text-[#ece7df]">
-			Nothing to show yet
-		</h3>
+						<h3 className="mb-3 text-lg sm:text-xl md:text-2xl font-semibold text-[#ece7df]">
+							Nothing to show yet
+						</h3>
 
-		<p className="max-w-md text-zinc-500">
-			{activeSection === "My Blogs"
-				? "Your published stories will appear here."
-				: activeSection === "Liked"
-				? "Stories you love will appear here."
-				: activeSection === "Comments"
-				? "Stories you interacted with will appear here."
-				: "No stories available right now."}
-		</p>
-	</div>
-) : (
-	<Link
-		href={`/post/${featuredPost.id}`}
-		className="
+						<p className="max-w-md text-zinc-500">
+							{activeSection === "My Blogs"
+								? "Your published stories will appear here."
+								: activeSection === "Liked"
+									? "Stories you love will appear here."
+									: activeSection === "Comments"
+										? "Stories you interacted with will appear here."
+										: "No stories available right now."}
+						</p>
+					</div>
+				) : (
+					<Link
+						href={`/post/${featuredPost.id}`}
+						className="
       mb-10 block overflow-hidden
       rounded-[34px]
       border border-white/[0.06]
@@ -740,7 +782,7 @@ focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]
 								src={featuredPost.image_url}
 								alt={featuredPost.title}
 								className="
-      h-[380px]
+      h-[160px] sm:h-[260px] md:h-[380px]
       w-full
       object-cover
       brightness-[0.88]
@@ -789,7 +831,7 @@ hover:scale-[1.01]
 											)}
 										</div>
 
-										<div className="mb-4 flex items-center gap-5 text-sm text-zinc-400">
+										<div className="mb-2 sm:mb-4 flex items-center gap-5 text-sm text-zinc-400">
 											<span>
 												By {featuredPost.users?.name?.trim() || "Writer"}
 											</span>
@@ -873,7 +915,7 @@ hover:scale-[1.01]
 								)}
 							</div>
 
-							<h2 className="mb-4 text-4xl font-semibold tracking-[-0.04em] text-zinc-100">
+							<h2 className="mb-4 text-base sm:text-xl md:text-2xl sm:text-3xl md:text-4xl font-semibold tracking-[-0.04em] text-zinc-100">
 								{featuredPost.title}
 							</h2>
 
@@ -935,7 +977,7 @@ hover:scale-[1.01]
 								EXPLORE MORE
 							</p>
 
-							<h2 className="text-2xl font-semibold text-[#ece7df]">
+							<h2 className="text-base sm:text-xl md:text-2xl font-semibold text-[#ece7df]">
 								More stories from creators across QuillNest.
 							</h2>
 						</div>
@@ -948,7 +990,7 @@ hover:scale-[1.01]
 							href={`/post/${post.id}`}
 							className="
                 overflow-hidden
-                rounded-[30px]
+                rounded-[22px] sm:rounded-[30px]
                 border border-white/[0.06]
                 bg-zinc-950/35
                 backdrop-blur-sm
@@ -961,15 +1003,15 @@ hover:scale-[1.01]
 									src={post.image_url}
 									alt={post.title}
 									className="
-                      h-[260px]
+                      h-[120px] sm:h-[180px] md:h-[260px]
                       w-full
                       object-cover
                     "
 								/>
 							)}
 
-							<div className="p-6">
-								<div className="mb-4 flex items-start justify-between text-sm text-zinc-500">
+							<div className="p-2 sm:p-6">
+								<div className="mb-2 sm:mb-4 flex items-start justify-between text-sm text-zinc-500">
 									<div className="flex items-center gap-4">
 										<button
 											onClick={(e) => {
@@ -1138,8 +1180,8 @@ hover:scale-[1.01]
 			<Link
 				href="/create"
 				className="
-        fixed bottom-8 right-8 z-30
-        flex h-20 w-20 items-center justify-center
+        fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-30
+        flex h-12 w-12 sm:h-20 sm:w-20 sm:h-20 sm:w-20 items-center justify-center
         rounded-full
         border border-white/10
         bg-gradient-to-b
@@ -1164,24 +1206,28 @@ from-violet-950 via-indigo-900 to-slate-900
   ">
 					<div
 						className="
-      w-full max-w-md
-      rounded-[30px]
-      border border-white/5
-      bg-zinc-950/90
-      p-8
-    ">
-						<h2 className="mb-3 text-2xl font-semibold">Delete Story?</h2>
+    w-[92%] sm:w-full max-w-md
+    rounded-[24px] sm:rounded-[30px]
+    border border-white/5
+    bg-zinc-950/90
+    p-4 sm:p-8
+  ">
+						<h2 className="mb-2 text-base sm:text-xl md:text-2xl font-semibold">
+							Delete Story?
+						</h2>
 
-						<p className="mb-8 text-zinc-400">This action cannot be undone.</p>
+						<p className="mb-5 text-xs sm:text-sm text-zinc-400">
+							This action cannot be undone.
+						</p>
 
-						<div className="flex gap-4">
+						<div className="flex gap-2 sm:gap-4">
 							<button
 								onClick={() => setShowDeleteModal(false)}
 								className="
         rounded-2xl
         border border-white/[0.06]
         bg-white/[0.02]
-        px-5 py-3
+        flex-1 sm:flex-none px-4 sm:px-5 py-3
         text-zinc-300
       
         transition-all duration-300
@@ -1203,7 +1249,7 @@ from-violet-950 via-indigo-900 to-slate-900
 								className="
         rounded-2xl
         bg-red-500/90
-        px-5 py-3
+        flex-1 sm:flex-none px-4 sm:px-5 py-3
         text-white
       
         transition-all duration-300
@@ -1212,12 +1258,12 @@ from-violet-950 via-indigo-900 to-slate-900
         hover:bg-red-400
         hover:shadow-[0_8px_20px_rgba(239,68,68,0.15)]
       ">
-						Delete
-					</button>
+								Delete
+							</button>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
-	)}
-	</main>
+			)}
+		</main>
 	);
 }
