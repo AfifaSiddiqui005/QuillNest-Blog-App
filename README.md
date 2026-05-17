@@ -8,7 +8,7 @@ The platform allows users to write, discover, and interact with stories in a cle
 
 ## Project Overview
 
-This project was built as part of a full-stack development assignment with the goal of creating a blogging platform that combines modern UI/UX with practical backend functionality.
+This project was built as part of a full-stack development with the goal of creating a blogging platform that combines modern UI/UX with practical backend functionality.
 
 Users can:
 
